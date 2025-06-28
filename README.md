@@ -1,6 +1,6 @@
 # Deep Legend 
 
-**Deep Legend** is a web platform designed to streamline the translation workflow for content creators and subtitlers. It allows users to input formatted captions—such as `.srt` subtitle files or timestamped scripts—and receive translations while preserving the original structure.
+**Deep Legend** is a web platform designed to streamline the translation workflow for content creators and subtitlers. It allows users to input formatted captions (such as `.srt` subtitle files or timestamped scripts) and receive translations while preserving the original structure.
 
 ## 🚧 Status: Work in Progress
 
