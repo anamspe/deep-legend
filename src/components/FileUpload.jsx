@@ -1,10 +1,13 @@
-function FileUpload({ onFileLoaded }) {
+import { forwardRef } from "react";
+
+const FileUpload = forwardRef(({ onFileLoaded }, ref) => {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       onFileLoaded(file);
     }
 
+    // Handle file reading and loading to text area
     const reader = new FileReader();
     reader.onload = () => {
       const text = reader.result;
@@ -16,6 +19,7 @@ function FileUpload({ onFileLoaded }) {
   return (
     <div className="m-4 flex flex-col self-center">
       <input
+        ref={ref}
         type="file"
         accept=".srt,.vtt,.txt, .csv"
         onChange={handleFileChange}
@@ -26,6 +30,6 @@ function FileUpload({ onFileLoaded }) {
       </p>
     </div>
   );
-}
+});
 
 export default FileUpload;
