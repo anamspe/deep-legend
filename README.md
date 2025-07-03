@@ -1,12 +1,30 @@
-# React + Vite
+# Deep Legend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Deep Legend** is a web platform designed to streamline the translation workflow for content creators and subtitlers. It allows users to input formatted captions (such as `.srt` subtitle files or timestamped scripts) and receive translations while preserving the original structure.
 
-Currently, two official plugins are available:
+## 🚧 Status: Work in Progress
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is in early development. Current focus:
+- Creating the main layout and input/output interface
+- Building .srt parser and formatter logic
+- Integrating AI-powered translation (OpenAI API or DeepL API planned)
+- Future: file upload/export, backend processing with Node.js
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (Vite)
+- Tailwind CSS
+- JavaScript
+- Node.js (planned)
+- OpenAI API or DeepL API (planned)
+
+## 📌 Goals
+
+- Seamless translation of subtitle files without losing formatting
+- Support for creators localizing YouTube videos, TV shows, tutorials, etc.
+- Easy-to-use UI with accurate, AI-assisted results
+
+---
+
+💡 Contributions and feedback are welcome as the project evolves!
+
