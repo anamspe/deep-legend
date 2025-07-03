@@ -1,6 +1,6 @@
 function NavBar() {
   return (
-    <nav className="bg-blue-900 text-white px-6 py-4 shadow-md">
+    <nav className="bg-cyan-800 text-white px-6 py-4 shadow-md">
       <div className="flex justify-between items-center max-w-5xl mx-auto">
         <h1 className="text-xl font-bold">Deep Legend</h1>
         <div className="space-x-6">
