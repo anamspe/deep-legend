@@ -1,14 +1,20 @@
 import { useRef, useState } from "react";
 import FileUpload from "./FileUpload";
+import { parseSRT } from "../utils/parseSRT";
 
 const TextAreaPanel = () => {
-  const [inputText, setIputText] = useState("");
+  const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const fileInputRef = useRef();
 
   const handleClear = () => {
-    setIputText(""); // Clear the input text area
+    setInputText(""); // Clear the input text area
     setOutputText(""); // Clear the output text area
+  };
+        
+  const handleFileLoad = (text) => {
+    setInputText(text);
+    parseSRT(text);
   };
 
   return (
@@ -20,7 +26,7 @@ const TextAreaPanel = () => {
 
       <div className="grid grid-cols-4 mb-4">
         <div className="col-span-3">
-        <FileUpload onFileLoaded={setIputText} ref={fileInputRef} />
+        <FileUpload onFileLoaded={handleFileLoad} ref={fileInputRef} />
         </div>
         <button
           className="justify-self-end self-center w-30 h-10 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200 ml-4"
@@ -36,7 +42,7 @@ const TextAreaPanel = () => {
           className="flex-1 p-4  bg-gray-50 border border-gray-300 rounded-md resize-none h-64"
           placeholder="Paste subtitle text here..."
           value={inputText}
-          onChange={(e) => setIputText(e.target.value)}
+          onChange={(e) => setInputText(e.target.value)}
         />
         <i className="fa-solid fa-right-left self-center text-2xl text-cyan-600"></i>
         <textarea
