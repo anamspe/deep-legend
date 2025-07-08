@@ -10,10 +10,25 @@ const FileUpload = forwardRef(({ onFileLoaded }, ref) => {
     // Handle file reading and loading to text area
     const reader = new FileReader();
     reader.onload = () => {
-      const text = reader.result;
+      const buffer = reader.result;
+      let text;
+
+      try {
+        // Try to decode the buffer as UTF-8 text
+        const utf8Decoder = new TextDecoder("utf-8", {fatal: true});
+        text = utf8Decoder.decode(buffer);
+      } catch (err) {
+        console.warn("UTF-8 decoding failed, falling back to Windows-1252.");
+        // Fallback for files saved in Windows encodings
+        const fallbackDecoder = new TextDecoder("windows-1252");
+        text = fallbackDecoder.decode(buffer);
+      }
+
       onFileLoaded(text);
+      e.target.value = null; // Clear the file input after reading
     };
-    reader.readAsText(file);
+
+    reader.readAsArrayBuffer(file);
   };
 
   return (

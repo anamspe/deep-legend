@@ -9,9 +9,6 @@ const TextAreaPanel = () => {
   const handleClear = () => {
     setIputText(""); // Clear the input text area
     setOutputText(""); // Clear the output text area
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null; // Clear the file input 
-    }
   };
 
   return (
@@ -46,6 +43,7 @@ const TextAreaPanel = () => {
           className="flex-1 p-4 border border-gray-200 rounded-md resize-none h-64 "
           placeholder="Translation will appear here..."
           value={outputText}
+          readOnly
         />
       </div>
       <div className="mt-12 justify-center flex">
