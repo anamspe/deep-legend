@@ -5,28 +5,37 @@ import { parseSRT } from "../utils/parseSRT";
 const TextAreaPanel = () => {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
+  const [subtitles, setSubtitles] = useState([]);
   const fileInputRef = useRef();
 
   const handleClear = () => {
     setInputText(""); // Clear the input text area
     setOutputText(""); // Clear the output text area
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null; // Clear the file input
+    }
   };
-        
+
   const handleFileLoad = (text) => {
     setInputText(text);
-    parseSRT(text);
+
+    const parsedSubtitles = parseSRT(text);
+    setSubtitles(parsedSubtitles);
+    console.log("Subtitles in state:", parsedSubtitles);
   };
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6 text-center">Captions Translator</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Captions Translator
+      </h1>
       <p className="text-gray-600 text-center mb-4">
         Paste your subtitle text below or upload a file to translate it.
       </p>
 
       <div className="grid grid-cols-4 mb-4">
         <div className="col-span-3">
-        <FileUpload onFileLoaded={handleFileLoad} ref={fileInputRef} />
+          <FileUpload onFileLoaded={handleFileLoad} ref={fileInputRef} />
         </div>
         <button
           className="justify-self-end self-center w-30 h-10 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200 ml-4"
@@ -65,6 +74,6 @@ const TextAreaPanel = () => {
       </div>
     </div>
   );
-}
+};
 
 export default TextAreaPanel;

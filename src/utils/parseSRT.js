@@ -21,6 +21,6 @@ export const parseSRT = (text) => {
     };
   }).filter(Boolean); // remove nulls from the final array if any
 
-  console.log("Parsed subtitles:", subtitles)
+  return subtitles;
 }
 

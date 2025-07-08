@@ -23,7 +23,6 @@ const FileUpload = forwardRef(({ onFileLoaded }, ref) => {
       }
 
       onFileLoaded(text);
-      e.target.value = null; // Clear the file input after reading
     };
 
     reader.readAsArrayBuffer(file);
