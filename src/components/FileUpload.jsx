@@ -3,9 +3,7 @@ import { forwardRef } from "react";
 const FileUpload = forwardRef(({ onFileLoaded }, ref) => {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      onFileLoaded(file);
-    }
+    if (!file) return;
 
     // Handle file reading and loading to text area
     const reader = new FileReader();
