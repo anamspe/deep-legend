@@ -8,7 +8,7 @@ This project is in early development. Current focus:
 - Creating the main layout and input/output interface
 - Building .srt parser and formatter logic
 - Integrating AI-powered translation (OpenAI API or DeepL API planned)
-- Future: file upload/export, backend processing with Node.js
+- Future: file <s>upload</s>✅/export, backend processing with Node.js
 
 ## 🛠 Tech Stack
 
@@ -27,4 +27,6 @@ This project is in early development. Current focus:
 ---
 
 💡 Contributions and feedback are welcome as the project evolves!
+
+👩🏻‍💻 Ana Franco © 2025
 
