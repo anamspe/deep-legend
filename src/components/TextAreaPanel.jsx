@@ -24,6 +24,12 @@ const TextAreaPanel = () => {
     console.log("Subtitles in state:", parsedSubtitles);
   };
 
+  const handleSubtitleChange = (index, newText) => {
+    const updated = [...subtitles];
+    updated[index].text = newText
+    setSubtitles(updated);
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6 text-center">
@@ -71,6 +77,26 @@ const TextAreaPanel = () => {
         >
           Translate
         </button>
+      </div>
+      <div className="mt-12">
+        <h2 className="text-xl font-semibold mb-4 text-center">
+          Editable Captions
+        </h2>
+        {subtitles.map((sub, index) => (
+          <div
+            key={sub.id}
+            className="mb-6 border p-4 rounded bg-gray-50 shadow-sm"
+          >
+            <p className="text-xs text-gray-600 mb-2">
+              {sub.start} → {sub.end}
+            </p>
+            <textarea
+              className="w-full border border-gray-300 rounded p-2 resize-y"
+              value={sub.text}
+              onChange={(e) => handleSubtitleChange(index, e.target.value)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
