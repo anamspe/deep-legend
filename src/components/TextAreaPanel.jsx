@@ -58,6 +58,7 @@ const TextAreaPanel = () => {
           placeholder="Paste subtitle text here..."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
+          readOnly
         />
         <i className="fa-solid fa-right-left self-center text-2xl text-cyan-600"></i>
         <textarea
@@ -78,9 +79,9 @@ const TextAreaPanel = () => {
           Translate
         </button>
       </div>
-      <div className="mt-12">
+      {/* <div className="mt-12">
         <h2 className="text-xl font-semibold mb-4 text-center">
-          Editable Captions
+          Edit Original Captions
         </h2>
         {subtitles.map((sub, index) => (
           <div
@@ -97,7 +98,7 @@ const TextAreaPanel = () => {
             />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
