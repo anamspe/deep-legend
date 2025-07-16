@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import FileUpload from "./FileUpload";
 import { parseSRT } from "../utils/parseSRT";
 import { translateSubtitles } from "../api/translate";
+import { buildSRT } from "../utils/buildSRT";
 
 const TextAreaPanel = () => {
   const [inputText, setInputText] = useState("");
@@ -42,8 +43,8 @@ const TextAreaPanel = () => {
       translation: translatedLines[index],
     }));
 
-    setSubtitles(updatedSubtitles);
-    setOutputText(translatedLines.join("\n\n"));
+    const outputSRT = buildSRT(updatedSubtitles)
+    setOutputText(outputSRT);
   }
 
   return (
