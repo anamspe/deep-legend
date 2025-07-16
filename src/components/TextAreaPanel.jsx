@@ -47,6 +47,18 @@ const TextAreaPanel = () => {
     setOutputText(outputSRT);
   }
 
+  const handleDownload = () => {
+    const blob = new Blob([outputText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "translated_subtitle.srt";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6 text-center">
@@ -92,6 +104,12 @@ const TextAreaPanel = () => {
           onClick={handleTranslate}
         >
           Translate
+        </button>
+        <button
+          className="ml-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+          onClick={handleDownload}
+        >
+          Download SRT
         </button>
       </div>
       {/* <div className="mt-12">
