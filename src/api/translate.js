@@ -1,4 +1,4 @@
-export async function translateSubtitles (lines, targetLang = "PT") {
+export async function translateSubtitles (lines, targetLang) {
   try {
     const response = await fetch("http://localhost:3001/translate", {
       method: "POST",

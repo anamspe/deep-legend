@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import FileUpload from "./FileUpload";
 import { parseSRT } from "../utils/parseSRT";
+import { translateSubtitles } from "../api/translate";
 
 const TextAreaPanel = () => {
   const [inputText, setInputText] = useState("");
@@ -24,10 +25,25 @@ const TextAreaPanel = () => {
     console.log("Subtitles in state:", parsedSubtitles);
   };
 
-  const handleSubtitleChange = (index, newText) => {
-    const updated = [...subtitles];
-    updated[index].text = newText
-    setSubtitles(updated);
+  // const handleSubtitleChange = (index, newText) => {
+  //   const updated = [...subtitles];
+  //   updated[index].text = newText
+  //   setSubtitles(updated);
+  // }
+
+  const handleTranslate = async () => {
+    if (!subtitles || subtitles.length === 0) return;
+
+    const linesToTranslate = subtitles.map(s => s.text);
+    const translatedLines = await translateSubtitles(linesToTranslate, "pt-BR");
+
+    const updatedSubtitles = subtitles.map((s, index) => ({
+      ...s,
+      translation: translatedLines[index],
+    }));
+
+    setSubtitles(updatedSubtitles);
+    setOutputText(translatedLines.join("\n\n"));
   }
 
   return (
@@ -70,11 +86,9 @@ const TextAreaPanel = () => {
       </div>
       <div className="mt-12 justify-center flex">
         <button
-          className="px-4 py-2 bg-cyan-600 text-white text-xl rounded-md hover:bg-cyan-700 transition-colors duration-300 ease-in-out cursor-pointer"
-          onClick={() => {
-            // Placeholder for translation logic
-            setOutputText(inputText); // For now, just echo input to output
-          }}
+          disabled={!subtitles.length}
+          className="px-4 py-2 bg-cyan-600 text-white text-xl rounded-md hover:bg-cyan-700 transition-colors duration-300 ease-in-out cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleTranslate}
         >
           Translate
         </button>

@@ -1,11 +1,16 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
+import express from "express";
+import cors from "cors";
+import * as deepl from "deepl-node";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+
+const translator = new deepl.Translator(process.env.DEEPL_API_KEY);
 
 
 // routes
@@ -21,24 +26,21 @@ app.post("/translate", async (req, res) => {
   }
 
   try {
-    const responses = await Promise.all(
-      lines.map((text) => 
-        axios.post(
-          "https://api-free.deepl.com/v2/translate",
-          new URLSearchParams({
-            auth_key: process.env.DEEPL_API_KEY,
-            text,
-            target_lang: targetLang || "PT", // Fallback/Default to Portuguese
-          })
-        )
-      )
+    const result = await translator.translateText(
+      lines,
+      null, // detect language
+      targetLang || "pt-BR" // falls to PT-BR in case no targetLang is sent
     );
 
-  const translated = responses.map((r) => r.data.translations[0].text);
-  res.json({translated});
-  } catch (err) {
-    console.error("Translation error:", err.response?.data || err.message);
-    res.status(500).json({ err: "Translation failed" });
+    // If only one line was sent, result is a single object, otherwise array
+    const translations = Array.isArray(result)
+      ? result.map((r) => r.text)
+      : [result.text];
+
+    res.json({ translated: translations });
+  } catch (error) {
+    console.error("DeepL SDK error:", error.message || error);
+    res.status(500).json({ error: "Translation failed" });
   }
 });
 
