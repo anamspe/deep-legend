@@ -3,11 +3,14 @@ import FileUpload from "./FileUpload";
 import { parseSRT } from "../utils/parseSRT";
 import { translateSubtitles } from "../api/translate";
 import { buildSRT } from "../utils/buildSRT";
+import { supportedLanguages } from "../utils/languages";
 
 const TextAreaPanel = () => {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [subtitles, setSubtitles] = useState([]);
+  const [inputLang, setInputLang] = useState("auto"); // auto = auto-detect
+  const [outputLang, setOutputLang] = useState("PT-BR") // default language: Brazilian Portuguese
   const fileInputRef = useRef();
 
   const handleClear = () => {
@@ -79,6 +82,32 @@ const TextAreaPanel = () => {
         >
           Clear
         </button>
+      </div>
+      <div>
+        <select
+          value={inputLang}
+          onChange={(e) => setInputLang(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+        >
+          <option value="auto">Auto-detect</option>
+          {supportedLanguages.map((lang) => (
+            <option key={lang.language} value={lang.language}>
+              {lang.name}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={outputLang}
+          onChange={(e) => setOutputLang(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+        >
+          {supportedLanguages.map((lang) => (
+            <option key={lang.language} value={lang.language}>
+              {lang.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
