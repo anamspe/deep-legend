@@ -17,6 +17,8 @@ const TextAreaPanel = () => {
   const handleClear = () => {
     setInputText(""); // Clear the input text area
     setOutputText(""); // Clear the output text area
+    setFileName(""); // Clear file name
+    setSubtitles([]); // Clear subtitle state to reset translate button
   };
 
   const handleFileLoad = (text, name) => {
@@ -82,7 +84,8 @@ const TextAreaPanel = () => {
           Clear
         </button>
       </div>
-      <div className="flex gap-20 justify-end mb-5">
+      <div className="flex gap-20 justify-between mb-2">
+        <p className="self-end text-xs text-gray-500 ml-1">Language will be auto-detected</p>
         <select
           value={outputLang}
           onChange={(e) => setOutputLang(e.target.value)}
@@ -97,23 +100,23 @@ const TextAreaPanel = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
-        <span className="flex flex-1 flex-col">
+        <span className="flex flex-1 flex-col relative">
         <textarea
-          className="flex-1 p-4  bg-gray-50 border border-gray-300 rounded-md resize-none h-64"
+          className="flex-1 p-4 bg-gray-50 border border-gray-300 rounded-md resize-none h-72"
           placeholder="Paste subtitle text here..."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           readOnly
           />
         {fileName && (
-          <p className="mt-2 text-sm text-gray-600">
-            📝 File selected: <span className="font-medium">{fileName}</span>
+          <p className="mt-2 text-sm text-gray-600 absolute -bottom-7 left-0">
+            📝 File selected: <span className="font-medium text-blue-600 opacity-80">{fileName}</span>
           </p>
         )}
         </span>
         <i className="fa-solid fa-right-left self-center text-2xl text-cyan-600"></i>
         <textarea
-          className="flex-1 p-4 border border-gray-200 rounded-md resize-none h-64 "
+          className="flex-1 p-4 border border-gray-200 rounded-md resize-none h-72"
           placeholder="Translation will appear here..."
           value={outputText}
           readOnly
