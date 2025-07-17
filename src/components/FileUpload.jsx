@@ -5,9 +5,11 @@ const FileUpload = forwardRef(({ onFileLoaded }, ref) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    e.target.value = null; // Reset input value so the same file can be reselected if needed // triggers "onChange"
+
     // Handle file reading and loading to text area
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = () => { 
       const buffer = reader.result;
       let text;
 
@@ -22,7 +24,7 @@ const FileUpload = forwardRef(({ onFileLoaded }, ref) => {
         text = fallbackDecoder.decode(buffer);
       }
 
-      onFileLoaded(text);
+      onFileLoaded(text, file.name);
     };
 
     reader.readAsArrayBuffer(file);

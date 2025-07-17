@@ -11,18 +11,17 @@ const TextAreaPanel = () => {
   const [subtitles, setSubtitles] = useState([]);
   const [inputLang, setInputLang] = useState("auto"); // auto = auto-detect
   const [outputLang, setOutputLang] = useState("PT-BR") // default language: Brazilian Portuguese
+  const [fileName, setFileName] = useState("");
   const fileInputRef = useRef();
 
   const handleClear = () => {
     setInputText(""); // Clear the input text area
     setOutputText(""); // Clear the output text area
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null; // Clear the file input
-    }
   };
 
-  const handleFileLoad = (text) => {
+  const handleFileLoad = (text, name) => {
     setInputText(text);
+    setFileName(name);
 
     const parsedSubtitles = parseSRT(text);
     setSubtitles(parsedSubtitles);
@@ -83,24 +82,11 @@ const TextAreaPanel = () => {
           Clear
         </button>
       </div>
-      <div>
-        <select
-          value={inputLang}
-          onChange={(e) => setInputLang(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
-        >
-          <option value="auto">Auto-detect</option>
-          {supportedLanguages.map((lang) => (
-            <option key={lang.language} value={lang.language}>
-              {lang.name}
-            </option>
-          ))}
-        </select>
-
+      <div className="flex gap-20 justify-end mb-5">
         <select
           value={outputLang}
           onChange={(e) => setOutputLang(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-l p-2 border border-gray-300 rounded bg-neutral-50"
         >
           {supportedLanguages.map((lang) => (
             <option key={lang.language} value={lang.language}>
@@ -111,13 +97,20 @@ const TextAreaPanel = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
+        <span className="flex flex-1 flex-col">
         <textarea
           className="flex-1 p-4  bg-gray-50 border border-gray-300 rounded-md resize-none h-64"
           placeholder="Paste subtitle text here..."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           readOnly
-        />
+          />
+        {fileName && (
+          <p className="mt-2 text-sm text-gray-600">
+            📝 File selected: <span className="font-medium">{fileName}</span>
+          </p>
+        )}
+        </span>
         <i className="fa-solid fa-right-left self-center text-2xl text-cyan-600"></i>
         <textarea
           className="flex-1 p-4 border border-gray-200 rounded-md resize-none h-64 "
