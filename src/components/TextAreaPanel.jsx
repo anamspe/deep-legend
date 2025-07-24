@@ -9,10 +9,12 @@ const TextAreaPanel = () => {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [subtitles, setSubtitles] = useState([]);
-  const [inputLang, setInputLang] = useState("auto"); // auto = auto-detect
+  // const [inputLang, setInputLang] = useState("auto"); // auto = auto-detect
   const [outputLang, setOutputLang] = useState("PT-BR") // default language: Brazilian Portuguese
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef();
+
+  const [showDownloadButton, setShowDownloadButton] = useState(false);
 
   const handleClear = () => {
     setInputText(""); // Clear the input text area
@@ -38,6 +40,7 @@ const TextAreaPanel = () => {
 
   const handleTranslate = async () => {
     if (!subtitles || subtitles.length === 0) return;
+    setShowDownloadButton(false);
 
     const linesToTranslate = subtitles.map(s => s.text);
     const translatedLines = await translateSubtitles(linesToTranslate, "pt-BR");
@@ -49,7 +52,12 @@ const TextAreaPanel = () => {
 
     const outputSRT = buildSRT(updatedSubtitles)
     setOutputText(outputSRT);
-  }
+
+    // Wait 2s before showing download button
+    setTimeout(() => {
+      setShowDownloadButton(true);
+    }, 2000);
+  };
 
   const handleDownload = () => {
     const blob = new Blob([outputText], { type: "text/plain;charset=utf-8" });
@@ -130,12 +138,14 @@ const TextAreaPanel = () => {
         >
           Translate
         </button>
+        {showDownloadButton && (
         <button
-          className="ml-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+          className="ml-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition delay-150 duration-200 ease-in-out"
           onClick={handleDownload}
         >
           Download SRT
         </button>
+        )}
       </div>
       {/* <div className="mt-12">
         <h2 className="text-xl font-semibold mb-4 text-center">
